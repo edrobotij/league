@@ -27,6 +27,10 @@ $app->get('league/{id}/edit', [
   'as' => 'league.edit', 'uses' => 'LeagueController@edit'
 ]);
 
-$app->get('users', [
+$app->get('user/index', [
   'as' => 'user.index', 'uses' => 'UserController@index'
+]);
+
+$app->get('user/{id}', [
+  'as' => 'user.get', 'uses' => 'UserController@get'
 ]);
