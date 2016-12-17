@@ -1,14 +1,14 @@
 # League * Baseball League/Organization Management/Analytics System.
 Rough Feature Scope
 * User account management
-* Registration
-..* Administration
-..* Role system
-..* Password reset
+  * Registration
+  * Administration
+  * Role system
+  * Password reset
 * League/Organization management
-..* CRUD features
-..* Color scheming
-..* Season system
+  * CRUD features
+  * Color scheming
+  * Season system
 ..* Playoff system
 ..* Stat features
 ..* Media features
