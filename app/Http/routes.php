@@ -14,3 +14,7 @@
 $app->get('/', function () use ($app) {
     return $app->version();
 });
+
+$app->get('leagues', [
+  'as' => 'leagues', 'uses' => 'LeagueController@index'
+]);
