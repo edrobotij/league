@@ -16,5 +16,17 @@ $app->get('/', function () use ($app) {
 });
 
 $app->get('leagues', [
-  'as' => 'leagues', 'uses' => 'LeagueController@index'
+  'as' => 'league.index', 'uses' => 'LeagueController@index'
+]);
+
+$app->get('{slug}', [
+  'as' => 'league.get', 'uses' => 'LeagueController@get'
+]);
+
+$app->get('league/{id}/edit', [
+  'as' => 'league.edit', 'uses' => 'LeagueController@edit'
+]);
+
+$app->get('users', [
+  'as' => 'user.index', 'uses' => 'UserController@index'
 ]);
