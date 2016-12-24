@@ -36,6 +36,28 @@ class UserController extends Controller
       return response()->json($user);
     }
 
+    public function store(Request $request)
+    {
+      app('db')->insert(
+        "INSERT INTO users (name, email, password, first_name, last_name,
+          birthdate, city, state, zip, created_at, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        [
+          $request->input('name'),
+          $request->input('email'),
+          app('hash')->make($request->input('password')),
+          $request->input('first_name'),
+          $request->input('last_name'),
+          $request->input('birthdate'),
+          $request->input('city'),
+          $request->input('state'),
+          $request->input('zip'),
+          time(),
+          time()
+        ]
+      );
+    }
+
     public function update(Request $request)
     {
       app('db')->update(
