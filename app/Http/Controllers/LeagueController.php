@@ -18,20 +18,22 @@ class LeagueController extends Controller
 
   public function index()
   {
-    $leagues = app('db')->select("SELECT * FROM leagues");
+    $leagues = app('db')->select("
+      SELECT * FROM leagues"
+    );
 
     return response()->json($leagues);
   }
 
   public function get($slug)
   {
-    $league = app('db')->select(
-      "SELECT l.name, l.description, l.city, l.state,
-              u.first_name, u.last_name, u.email
-       FROM leagues l
-       INNER JOIN users u
-       ON l.commissioner_id = u.id
-       WHERE slug = ?",
+    $league = app('db')->select("
+      SELECT l.name, l.description, l.city, l.state,
+        u.first_name, u.last_name, u.email
+      FROM leagues l
+      INNER JOIN users u
+      ON l.commissioner_id = u.id
+      WHERE slug = ?",
       [$slug]
     )[0];
 
@@ -40,10 +42,10 @@ class LeagueController extends Controller
 
   public function store(Request $request)
   {
-    app('db')->insert(
-      "INSERT INTO leagues (name, description, city, state, commissioner_id
+    app('db')->insert("
+      INSERT INTO leagues (name, description, city, state, commissioner_id
         created_at, updated_at, slug)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
       [
         $request->input('name'),
         $request->input('description'),
@@ -52,15 +54,15 @@ class LeagueController extends Controller
         $request->input('commissioner_id'),
         time(),
         time(),
-        app('helper')->slugify($request->input('name'))
+        app('helper')->slugify($request->input('name')) // Needs implemented
       ]
     );
   }
 
   public function edit($id)
   {
-    $league = app('db')->select(
-      "SELECT id, name, description, city, state FROM leagues WHERE id = ?",
+    $league = app('db')->select("
+      SELECT id, name, description, city, state FROM leagues WHERE id = ?",
       [$id]
     )[0];
 
@@ -69,28 +71,29 @@ class LeagueController extends Controller
 
   public function update(Request $request)
   {
-    app('db')->update(
-      "UPDATE leagues
-        SET name = :name, description = :description, city = :city,
-          state = :state
-        WHERE id = :id",
+    app('db')->update("
+      UPDATE leagues
+      SET name = :name, description = :description, city = :city,
+        state = :state, updated_at = :updated_at
+      WHERE id = :id",
       [
         'id' => $request->input('id'),
         'name' => $request->input('name'),
         'description' => $request->input('description'),
         'city' => $request->input('city'),
-        'state' => $request->input('state')
+        'state' => $request->input('state'),
+        'updated_at' => time()
       ]
     );
   }
 
   public function teams($slug)
   {
-    $teams = app('db')->select(
-      "SELECT t.name, t.city, t.state FROM teams t
-       INNER JOIN leagues l
-       ON l.id = t.league_id
-       WHERE l.slug = ?",
+    $teams = app('db')->select("
+      SELECT t.name, t.city, t.state FROM teams t
+      INNER JOIN leagues l
+      ON l.id = t.league_id
+      WHERE l.slug = ?",
       [$slug]
     );
 

@@ -18,9 +18,10 @@ class UserController extends Controller
 
   public function index()
   {
-    $users = app('db')->select(
-      "SELECT id, name, email, first_name, last_name,
-        birthdate, city, state, zip FROM users");
+    $users = app('db')->select("
+      SELECT id, name, email, first_name, last_name,
+      birthdate, city, state, zip FROM users"
+    );
 
     return response()->json($users);
   }
@@ -38,10 +39,10 @@ class UserController extends Controller
 
   public function store(Request $request)
   {
-    app('db')->insert(
-      "INSERT INTO users (name, email, password, first_name, last_name,
+    app('db')->insert("
+      INSERT INTO users (name, email, password, first_name, last_name,
         birthdate, city, state, zip, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         $request->input('name'),
         $request->input('email'),
@@ -60,12 +61,12 @@ class UserController extends Controller
 
   public function update(Request $request)
   {
-    app('db')->update(
-      "UPDATE users
-       SET name = :name, email = :email, first_name = :first_name,
-           last_name = :last_name, birthdate = :birthdate, city = :city,
-           state = :state, zip = :zip, updated_at = :updated_at
-       WHERE id = :id",
+    app('db')->update("
+      UPDATE users
+      SET name = :name, email = :email, first_name = :first_name,
+        last_name = :last_name, birthdate = :birthdate, city = :city,
+        state = :state, zip = :zip, updated_at = :updated_at
+      WHERE id = :id",
       [
         'id' => $request->input('id'),
         'name' => $request->input('name'),
