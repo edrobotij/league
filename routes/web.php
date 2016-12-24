@@ -23,6 +23,10 @@ $app->get('{slug}', [
   'as' => 'league.get', 'uses' => 'LeagueController@get'
 ]);
 
+$app->get('{slug}/teams', [
+  'as' => 'league.teams', 'uses' => 'LeagueController@teams'
+]);
+
 $app->get('league/{id}/edit', [
   'as' => 'league.edit', 'uses' => 'LeagueController@edit'
 ]);
