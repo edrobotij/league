@@ -59,4 +59,23 @@ class PlayerController extends Controller
 
     return response()->json($player);
   }
+
+  public function update(Request $request)
+  {
+    app('db')->update("
+      UPDATE players
+      SET first_name = :first_name, last_name = :last_name, number = :number,
+        bats = :bats, throws = :throws, updated_at = :updated_at
+      WHERE id = :id",
+      [
+        'id' => $request->input('id'),
+        'first_name' => $request->input('first_name'),
+        'last_name' => $request->input('last_name'),
+        'number' => $request->input('number'),
+        'bats' => $request->input('bats'),
+        'throws' => $request->input('throws'),
+        'updated_at' => time()
+      ]
+    );
+  }
 }
