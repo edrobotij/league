@@ -29,7 +29,8 @@ class LeagueController extends Controller
   {
     $league = app('db')->select("
       SELECT l.name, l.description, l.city, l.state,
-        u.first_name, u.last_name, u.email
+        CONCAT(u.first_name, ' ', u.last_name) AS 'commissioner',
+        u.email AS 'commissioner_email'
       FROM leagues l
       INNER JOIN users u
       ON l.commissioner_id = u.id

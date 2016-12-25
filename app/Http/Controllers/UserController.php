@@ -81,4 +81,19 @@ class UserController extends Controller
       ]
     );
   }
+
+  public function roles($id)
+  {
+    $role = app('db')->select("
+      SELECT r.name FROM users u
+      INNER JOIN role_user ru
+      ON ru.user_id = u.id
+      INNER JOIN roles r
+      ON ru.role_id = r.id
+      WHERE u.id = ?",
+      [$id]
+    );
+
+    return response()->json($role);
+  }
 }

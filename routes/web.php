@@ -39,10 +39,22 @@ $app->get('{slug}/team/{id}/edit', [
   'as' => 'team.edit', 'uses' => 'TeamController@edit'
 ]);
 
+$app->get('player/index', [
+  'as' => 'player.index', 'uses' => 'PlayerController@index'
+]);
+
+$app->get('player/{id}', [
+  'as' => 'player.get', 'uses' => 'PlayerController@get'
+]);
+
 $app->get('user/index', [
   'as' => 'user.index', 'uses' => 'UserController@index'
 ]);
 
 $app->get('user/{id}', [
   'as' => 'user.get', 'uses' => 'UserController@get'
+]);
+
+$app->get('user/{id}/roles', [
+  'as' => 'user.roles', 'uses' => 'UserController@roles'
 ]);
