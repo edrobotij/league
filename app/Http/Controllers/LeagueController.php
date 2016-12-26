@@ -97,6 +97,8 @@ class LeagueController extends Controller
       WHERE l.slug = ?",
       [$slug]
     );
+
+    return response()->json($divisions);
   }
 
   public function teams($slug)
