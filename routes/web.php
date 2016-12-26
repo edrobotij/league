@@ -35,6 +35,10 @@ $app->get('league/{id}/edit', [
   'as' => 'league.edit', 'uses' => 'LeagueController@edit'
 ]);
 
+$app->get('divisions', [
+  'as' => 'divisions.index', 'uses' => 'DivisionController@index'
+]);
+
 $app->get('{slug}/team/{id}', [
   'as' => 'team.get', 'uses' => 'TeamController@get'
 ]);
