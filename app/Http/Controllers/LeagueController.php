@@ -88,6 +88,17 @@ class LeagueController extends Controller
     );
   }
 
+  public function divisions($slug)
+  {
+    $divisions = app('db')->select("
+      SELECT d.name FROM divisions d
+      INNER JOIN leagues l
+      ON l.id = d.league_id
+      WHERE l.slug = ?",
+      [$slug]
+    );
+  }
+
   public function teams($slug)
   {
     $teams = app('db')->select("
