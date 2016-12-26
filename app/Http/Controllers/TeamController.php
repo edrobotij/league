@@ -84,4 +84,17 @@ class TeamController extends Controller
       ]
     );
   }
+
+  public function add_player($team_id, $player_id)
+  {
+    app('db')->update("
+      UPDATE players
+      SET team_id = :team_id
+      WHERE id = :played_id",
+      [
+        'team_id' => $team_id,
+        'player_id' => $player_id
+      ]
+    );
+  }
 }
