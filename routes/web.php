@@ -19,8 +19,20 @@ $app->get('leagues', [
   'as' => 'league.index', 'uses' => 'LeagueController@index'
 ]);
 
-$app->get('{slug}', [
-  'as' => 'league.get', 'uses' => 'LeagueController@get'
+$app->get('divisions', [
+  'as' => 'divisions.index', 'uses' => 'DivisionController@index'
+]);
+
+$app->get('player/index', [
+  'as' => 'player.index', 'uses' => 'PlayerController@index'
+]);
+
+$app->get('user/index', [
+  'as' => 'user.index', 'uses' => 'UserController@index'
+]);
+
+$app->post('league/store', [
+  'as' => 'league.store', 'uses' => 'LeagueController@store'
 ]);
 
 $app->get('{slug}/divisions', [
@@ -31,32 +43,20 @@ $app->get('{slug}/teams', [
   'as' => 'league.teams', 'uses' => 'LeagueController@teams'
 ]);
 
-$app->get('league/{id}/edit', [
-  'as' => 'league.edit', 'uses' => 'LeagueController@edit'
-]);
-
-$app->get('divisions', [
-  'as' => 'divisions.index', 'uses' => 'DivisionController@index'
-]);
-
 $app->get('{slug}/team/{id}', [
   'as' => 'team.get', 'uses' => 'TeamController@get'
+]);
+
+$app->get('league/{id}/edit', [
+  'as' => 'league.edit', 'uses' => 'LeagueController@edit'
 ]);
 
 $app->get('{slug}/team/{id}/edit', [
   'as' => 'team.edit', 'uses' => 'TeamController@edit'
 ]);
 
-$app->get('player/index', [
-  'as' => 'player.index', 'uses' => 'PlayerController@index'
-]);
-
 $app->get('player/{id}', [
   'as' => 'player.get', 'uses' => 'PlayerController@get'
-]);
-
-$app->get('user/index', [
-  'as' => 'user.index', 'uses' => 'UserController@index'
 ]);
 
 $app->get('user/{id}', [
@@ -65,4 +65,8 @@ $app->get('user/{id}', [
 
 $app->get('user/{id}/roles', [
   'as' => 'user.roles', 'uses' => 'UserController@roles'
+]);
+
+$app->get('{slug}', [
+  'as' => 'league.get', 'uses' => 'LeagueController@get'
 ]);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Helpers;
 
 class LeagueController extends Controller
 {
@@ -27,26 +28,14 @@ class LeagueController extends Controller
 
   public function get($slug)
   {
-    $league = app('db')->select("
-      SELECT l.name, l.description, l.city, l.state,
-        CONCAT(u.first_name, ' ', u.last_name) AS 'commissioner',
-        u.email AS 'commissioner_email'
-      FROM leagues l
-      INNER JOIN users u
-      ON l.commissioner_id = u.id
-      WHERE slug = ?",
-      [$slug]
-    )[0];
+    $league = app('db')->select("CALL get_league(?)", [$slug])[0];
 
     return response()->json($league);
   }
 
   public function store(Request $request)
   {
-    app('db')->insert("
-      INSERT INTO leagues (name, description, city, state, commissioner_id
-        created_at, updated_at, slug)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+    app('db')->insert("CALL insert_league(?, ?, ?, ?, ?, ?, ?, ?)",
       [
         $request->input('name'),
         $request->input('description'),
@@ -55,17 +44,14 @@ class LeagueController extends Controller
         $request->input('commissioner_id'),
         time(),
         time(),
-        app('helper')->slugify($request->input('name')) // Needs implemented
+        Helpers::slugify($request->input('name')) // Needs implemented
       ]
     );
   }
 
   public function edit($id)
   {
-    $league = app('db')->select("
-      SELECT id, name, description, city, state FROM leagues WHERE id = ?",
-      [$id]
-    )[0];
+    $league = app('db')->select("CALL edit_league(?)", [$id])[0];
 
     return response()->json($league);
   }
@@ -90,13 +76,7 @@ class LeagueController extends Controller
 
   public function divisions($slug)
   {
-    $divisions = app('db')->select("
-      SELECT d.id, d.name FROM divisions d
-      INNER JOIN leagues l
-      ON l.id = d.league_id
-      WHERE l.slug = ?",
-      [$slug]
-    );
+    $divisions = app('db')->select("CALL get_league_divisions(?)", [$slug]);
 
     return response()->json($divisions);
   }
